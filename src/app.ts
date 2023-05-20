@@ -12,6 +12,7 @@ api.use(cors())
 api.use("/api/category", routerCategory)
 
 
-api.use('/api', async (_, res) => res.sendStatus(200))
-
+api.get('/', (req, res) => {
+  res.status(200).send();
+});
 export { api }
