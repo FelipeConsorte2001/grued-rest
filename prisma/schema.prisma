@@ -11,8 +11,8 @@ datasource db {
 }
 
 model Category {
-  id       Int        @id @unique @default(autoincrement())
-  name     String     @db.VarChar(100)
+  id       Int           @id @unique @default(autoincrement())
+  name     Type_products
   products Products[]
 }
 
@@ -22,4 +22,10 @@ model Products {
   description String   @db.VarChar(100)
   amount      Decimal  @db.Decimal(12, 2)
   idCategoria Category @relation(fields: [id], references: [id])
+}
+
+enum Type_products {
+  Computing
+  Automotive
+  Furniture
 }
