@@ -8,6 +8,14 @@ const productController = {
     } catch (error) {
       return res.status(500).json({ response: error })
     }
+  },
+  findProduct: async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const result = await servicesProduct.findProduct(req.params.product)
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(500).json({ response: error })
+    }
   }
 }
 
