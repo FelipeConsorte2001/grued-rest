@@ -40,6 +40,17 @@ describe('grud category', () => {
     expect(response.status).toBe(200)
     expect(response.body.success).toBe('category deleted');
   })
+  test('must maintain a category', async () => {
+    const category = await request.default(api)
+      .post('/api/category')
+      .send({ name: 'Computing' })
+    const response = await request.default(api)
+      .put(`/api/category/${category.body.id}`)
+      .send({ name: 'Automotive' })
+    console.log(response.body)
+    expect(response.status).toBe(200)
+    expect(response.body.name).toBe('Automotive');
+  })
   afterAll(async () => {
     await prisma().finally()
   })

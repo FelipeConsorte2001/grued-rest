@@ -26,6 +26,14 @@ const categoryController = {
     } catch (error) {
       return res.status(500).json({ response: error })
     }
+  },
+  updateCategory: async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const result = await servicesCategory.updateCategory(Number(req.params.id), req.body)
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(500).json({ response: error })
+    }
   }
 }
 

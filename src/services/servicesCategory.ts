@@ -40,6 +40,20 @@ const servicesCategory = {
     } catch (error: any) {
       return error
     }
+  },
+  updateCategory: async (identifier: Number, category: ICategory): Promise<ICategory> => {
+    try {
+      const db = await prisma()
+      const result = await db.category.update({
+        where: {
+          id: identifier
+        },
+        data: category
+      })
+      return result
+    } catch (error: any) {
+      return error
+    }
   }
 }
 export default servicesCategory
