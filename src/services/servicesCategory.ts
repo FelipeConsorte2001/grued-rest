@@ -1,7 +1,7 @@
 import prisma from '../db/connect'
 import { ICategory } from '../types/ICategory.interface'
 const servicesCategory = {
-  createCategory: async (category: ICategory): Promise<any> => {
+  createCategory: async (category: ICategory): Promise<ICategory> => {
     try {
       const db = await prisma()
       const result = await db.category.create({
@@ -12,7 +12,7 @@ const servicesCategory = {
       return error
     }
   },
-  findCategory: async (category: String): Promise<any> => {
+  findCategory: async (category: String): Promise<ICategory> => {
     try {
       const db = await prisma()
       const result = await db.category.findFirst({

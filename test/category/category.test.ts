@@ -24,6 +24,14 @@ describe('grud category', () => {
     expect(response.body.name).toBe('Computing');
   })
 
+  test('validates category parameters', async () => {
+    const response = await request.default(api)
+      .post('/api/category')
+      .send({ name: 'ivalid' })
+    console.log(response.body)
+    expect(response.status).toBe(500)
+    expect(response.body.error).toBe('invalid parameter');
+  })
   afterAll(async () => {
     await prisma().finally()
   })
