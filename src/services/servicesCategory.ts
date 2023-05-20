@@ -1,5 +1,6 @@
 import prisma from '../db/connect'
 import { ICategory } from '../types/ICategory.interface'
+import { IDelCategory } from '../types/IDelCategory.interface'
 const servicesCategory = {
   createCategory: async (category: ICategory): Promise<ICategory> => {
     try {
@@ -21,6 +22,21 @@ const servicesCategory = {
         }
       })
       return result
+    } catch (error: any) {
+      return error
+    }
+  },
+  deleteCategory: async (category: Number): Promise<IDelCategory> => {
+    try {
+      const db = await prisma()
+      const result = await db.category.delete({
+        where: {
+          id: category
+        }
+      })
+      return {
+        success: 'category deleted'
+      }
     } catch (error: any) {
       return error
     }

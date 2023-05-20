@@ -28,9 +28,17 @@ describe('grud category', () => {
     const response = await request.default(api)
       .post('/api/category')
       .send({ name: 'ivalid' })
-    console.log(response.body)
     expect(response.status).toBe(500)
     expect(response.body.error).toBe('invalid parameter');
+  })
+  test('must delete a category', async () => {
+    const category = await request.default(api)
+      .post('/api/category')
+      .send({ name: 'Computing' })
+    const response = await request.default(api)
+      .delete(`/api/category/${category.body.id}`)
+    expect(response.status).toBe(200)
+    expect(response.body.success).toBe('category deleted');
   })
   afterAll(async () => {
     await prisma().finally()
