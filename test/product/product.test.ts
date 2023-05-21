@@ -75,8 +75,37 @@ describe('validating product parameters', () => {
     expect(response.status).toBe(500)
     expect(response.body.error).toBe(errorMessage)
   }
-  test('you must not enter a product without a name', () => testTemplate({ name: null }, 'ivalid name'))
-  test('you must not enter a product without a description', () => testTemplate({ description: null }, 'ivalid description'))
-  test('you must not enter a product without a amount', () => testTemplate({ amount: null }, 'ivalid amount'))
-  test('you must not enter a product without a categoria', () => testTemplate({ idCategoria: null }, 'ivalid categoria'))
+  test('you must not enter a product without a name', () => testTemplate({ name: null }, 'invalid parameters'))
+  test('you must not enter a product without a description', () => testTemplate({ description: null }, 'invalid parameters'))
+  test('you must not enter a product without a amount', () => testTemplate({ amount: null }, 'invalid parameters'))
+  test('you must not enter a product without a categoria', () => testTemplate({ idCategoria: null }, 'invalid parameters'))
+  afterAll(async () => {
+    await prisma().finally()
+  })
+})
+describe('validating parameters to update the product', () => {
+  let valideProduct: IProduct
+  let category: any
+  let product: any
+  beforeAll(async () => {
+    await prisma()
+    category = await request.default(api)
+      .post('/api/category')
+      .send({ name: 'Computing' })
+    valideProduct = { name: 'TV invalid', description: 'some description', amount: 100.00, idCategoria: category.body.id };
+    product = await request.default(api)
+      .post('/api/product')
+      .send(valideProduct)
+  });
+  const testTemplate = async (newData: any, errorMessage: string) => {
+    const response = await request.default(api)
+      .put(`/api/product/${product.body.id}`)
+      .send({ ...valideProduct, ...newData })
+    expect(response.status).toBe(500)
+    expect(response.body.error).toBe(errorMessage)
+  }
+  test('you must not enter a product without a name', () => testTemplate({ name: null }, 'invalid parameters'))
+  test('you must not enter a product without a description', () => testTemplate({ description: null }, 'invalid parameters'))
+  test('you must not enter a product without a amount', () => testTemplate({ amount: null }, 'invalid parameters'))
+  test('you must not enter a product without a categoria', () => testTemplate({ idCategoria: null }, 'invalid parameters'))
 })

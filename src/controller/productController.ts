@@ -1,12 +1,13 @@
 import { type Request, type Response } from 'express'
 import servicesProduct from '../services/servicesProduct'
+import { IProduct } from '../types/IProduct.interface'
+import { IErroParameters } from '../types/IErroParameters.interface'
+
 const productController = {
   createProduct: async (req: Request, res: Response): Promise<Response> => {
     try {
-      if (!req.body.name) return res.status(500).json({ error: 'ivalid name' })
-      if (!req.body.description) return res.status(500).json({ error: 'ivalid description' })
-      if (!req.body.amount) return res.status(500).json({ error: 'ivalid amount' })
-      if (!req.body.idCategoria) return res.status(500).json({ error: 'ivalid categoria' })
+      const validProdut = productController.validProduct(req.body)
+      if (validProdut.invalid) return res.status(500).json({ error: validProdut.menssagem })
 
       const result = await servicesProduct.createProduct(req.body)
       return res.status(200).json(result)
@@ -24,6 +25,8 @@ const productController = {
   },
   updateProduct: async (req: Request, res: Response): Promise<Response> => {
     try {
+      const validProdut = productController.validProduct(req.body)
+      if (validProdut.invalid) return res.status(500).json({ error: validProdut.menssagem })
       const result = await servicesProduct.updateProduct(Number(req.params.id), req.body)
       return res.status(200).json(result)
     } catch (error) {
@@ -37,8 +40,14 @@ const productController = {
     } catch (error) {
       return res.status(500).json({ response: error })
     }
+  },
+  validProduct: (data: IProduct): IErroParameters => {
+    if (!data.name) return { invalid: true, menssagem: 'invalid parameters' }
+    if (!data.description) return { invalid: true, menssagem: 'invalid parameters' }
+    if (!data.amount) return { invalid: true, menssagem: 'invalid parameters' }
+    if (!data.idCategoria) return { invalid: true, menssagem: 'invalid parameters' }
+    return { invalid: false, menssagem: 'nothing' }
   }
-
 }
 
 export default productController
