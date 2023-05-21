@@ -10,7 +10,7 @@ datasource db {
 model category {
   id                                      Int           @id @unique @default(autoincrement())
   name                                    type_products
-  fee                                     String        @default("0")
+  fee                                     String        @default("5")
   products_products_idCategoriaTocategory products[]    @relation("products_idCategoriaTocategory")
 }
 

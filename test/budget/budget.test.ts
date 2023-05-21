@@ -48,7 +48,7 @@ describe('validate budget', () => {
     await prisma()
     category = await request.default(api)
       .post('/api/category')
-      .send({ name: 'Computing' })
+      .send({ name: 'Computing', fee: '5' })
     product = await request.default(api)
       .post('/api/product')
       .send({ name: `tv ${new Date()}`, description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })

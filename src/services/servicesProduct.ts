@@ -11,7 +11,6 @@ const servicesProduct = {
       })
       return result
     } catch (error: any) {
-      console.log(error)
       return error
     }
   },
@@ -74,7 +73,6 @@ const servicesProduct = {
         success: 'product deleted'
       }
     } catch (error: any) {
-      console.log(error)
       return error
     }
   }
