@@ -2,6 +2,7 @@ import { expect, test } from '@jest/globals'
 import { api } from '../../src/app'
 import prisma from '../../src/db/connect'
 import * as request from 'supertest'
+import { IProduct } from '../../src/types/IProduct.interface'
 
 
 describe('grud product', () => {
@@ -55,4 +56,27 @@ describe('grud product', () => {
   afterAll(async () => {
     await prisma().finally()
   })
+})
+describe('validating product parameters', () => {
+  let valideProduct: IProduct
+  let category: any
+  beforeAll(async () => {
+    await prisma()
+    category = await request.default(api)
+      .post('/api/category')
+      .send({ name: 'Computing' })
+    valideProduct = { name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id };
+  });
+
+  const testTemplate = async (newData: any, errorMessage: string) => {
+    const response = await request.default(api)
+      .post('/api/product')
+      .send({ ...valideProduct, ...newData })
+    expect(response.status).toBe(500)
+    expect(response.body.error).toBe(errorMessage)
+  }
+  test('you must not enter a product without a name', () => testTemplate({ name: null }, 'ivalid name'))
+  test('you must not enter a product without a description', () => testTemplate({ description: null }, 'ivalid description'))
+  test('you must not enter a product without a amount', () => testTemplate({ amount: null }, 'ivalid amount'))
+  test('you must not enter a product without a categoria', () => testTemplate({ idCategoria: null }, 'ivalid categoria'))
 })
