@@ -126,4 +126,7 @@ describe('validating parameters to update the product', () => {
   test('you must not enter a product without a description', async () => { await testTemplate({ description: null }, 'invalid parameters') })
   test('you must not enter a product without a amount', async () => { await testTemplate({ amount: null }, 'invalid parameters') })
   test('you must not enter a product without a categoria', async () => { await testTemplate({ idCategoria: null }, 'invalid parameters') })
+  afterAll(async () => {
+    await prisma().finally()
+  })
 })
