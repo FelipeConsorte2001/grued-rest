@@ -28,6 +28,26 @@ const servicesProduct = {
       return error
     }
   },
+  findProducts: async (): Promise<IProduct> => {
+    try {
+      const db = await prisma()
+      const result = await db.products.findMany({
+        select: {
+          name: true,
+          description: true,
+          amount: true,
+          category_products_idCategoriaTocategory: {
+            select: {
+              name: true
+            }
+          }
+        }
+      })
+      return result
+    } catch (error: any) {
+      return error
+    }
+  },
   updateProduct: async (identifier: number, product: IProduct): Promise<IProduct> => {
     try {
       const db = await prisma()

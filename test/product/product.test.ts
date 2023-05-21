@@ -21,6 +21,16 @@ describe('grud product', () => {
     expect(response.body.name).toBe('monitor')
     expect(response.body.idCategoria).toBe(category.body.id)
   })
+  test('get all products', async () => {
+    await request.default(api)
+      .post('/api/product')
+      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+    const response = await request.default(api)
+      .get('/api/product/')
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBeGreaterThan(0)
+    expect(response.body[0]).toHaveProperty('category_products_idCategoriaTocategory')
+  })
 
   test('must pick up a product by name', async () => {
     const product = await request.default(api)
