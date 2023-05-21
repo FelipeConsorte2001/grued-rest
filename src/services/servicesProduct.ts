@@ -1,4 +1,5 @@
 import prisma from '../db/connect'
+import { IDelSucess } from '../types/IDelSucess.interface'
 import { IProduct } from '../types/IProduct.interface'
 
 const servicesProduct = {
@@ -38,6 +39,22 @@ const servicesProduct = {
       })
       return result
     } catch (error: any) {
+      return error
+    }
+  },
+  deleteProduct: async (identifier: Number): Promise<IDelSucess> => {
+    try {
+      const db = await prisma()
+      const result = await db.products.delete({
+        where: {
+          id: identifier
+        }
+      })
+      return {
+        success: 'product deleted'
+      }
+    } catch (error: any) {
+      console.log(error)
       return error
     }
   }

@@ -6,6 +6,7 @@ const routes = Router()
 routes.post('/', controller.createProduct)
 routes.get('/:product', controller.findProduct)
 routes.put('/:id', controller.updateProduct)
+routes.delete('/:id', controller.deleteProduct)
 
 
 export default routes

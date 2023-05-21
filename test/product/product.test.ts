@@ -43,6 +43,15 @@ describe('grud product', () => {
     expect(response.body.name).toBe('TV');
     expect(response.body.description).toBe('descripton update');
   })
+  test('must delete a product', async () => {
+    const product = await request.default(api)
+      .post('/api/product')
+      .send({ name: 'product del', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+    const response = await request.default(api)
+      .delete(`/api/product/${product.body.id}`)
+    expect(response.status).toBe(200)
+    expect(response.body.success).toBe('product deleted');
+  })
   afterAll(async () => {
     await prisma().finally()
   })
