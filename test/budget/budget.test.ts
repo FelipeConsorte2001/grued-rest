@@ -73,6 +73,7 @@ describe('validate budget', () => {
     expect(response.body.error).toBe(errorMessage)
   }
   test('you cannot create a budget without quantity', async (): Promise<void> => { await testTemplate({ quantity: null }, 'invalid parameters') })
+  test('you cannot with a quantity larger than the stock', async (): Promise<void> => { await testTemplate({ quantity: 50 }, 'invalid parameters') })
   test('you cannot create a budget without category', async (): Promise<void> => { await testTemplate({ products: { category: null } }, 'invalid parameters') })
   test('you cannot create a budget without amount', async (): Promise<void> => { await testTemplate({ products: { amount: null } }, 'invalid parameters') })
 

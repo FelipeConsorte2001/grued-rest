@@ -1,12 +1,15 @@
 import { type Request, type Response } from 'express'
 import { type IErroParameters } from '../types/IErroParameters.interface'
 import { type IBudget } from '../types/IBudget.interface'
+import servicesProduct from '../services/servicesProduct'
 
 const budgetController = {
   createBudget: async (req: Request, res: Response): Promise<Response> => {
     try {
-      const valid = budgetController.validateBody(req.body)
-      if (valid.invalid) return res.status(500).json({ error: 'invalid parameters' })
+      const validParams = budgetController.validateBody(req.body)
+      if (validParams.invalid) return res.status(500).json({ error: validParams.menssagem })
+      const validQuantity = await budgetController.validQuantity(Number(req.body.quantity), req.body.products.name)
+      if (validQuantity.invalid) return res.status(500).json({ error: validQuantity.menssagem })
       const { amount, category } = req.body.products
       const interest: any = {
         Computing: 5,
@@ -30,6 +33,11 @@ const budgetController = {
     if (!data.products.category) return { invalid: true, menssagem: 'invalid parameters' }
     if (!data.products.amount) return { invalid: true, menssagem: 'invalid parameters' }
     return { invalid: false, menssagem: 'nothing' }
+  },
+  validQuantity: async (quantity: number, name: string): Promise<IErroParameters> => {
+    const product = await servicesProduct.findProduct(name)
+    if (product.quantity <= quantity) return { invalid: true, menssagem: 'invalid parameters' }
+    return { invalid: false, menssagem: 'invalid parameters' }
   }
 }
 
