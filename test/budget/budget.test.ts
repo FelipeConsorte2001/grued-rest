@@ -13,7 +13,7 @@ describe('create budget', () => {
     category = await request.default(api)
       .post('/api/category')
       .send({ name: 'Computing' })
-    valideProduct = { name: `tv ${new Date()}`, description: 'some description', amount: 100.00, idCategoria: category.body.id }
+    valideProduct = { name: `tv ${new Date()}`, description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 }
     product = await request.default(api)
       .post('/api/product')
       .send(valideProduct)
@@ -51,7 +51,7 @@ describe('validate budget', () => {
       .send({ name: 'Computing' })
     product = await request.default(api)
       .post('/api/product')
-      .send({ name: `tv ${new Date()}`, description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: `tv ${new Date()}`, description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     valideBudget = {
       quantity: 2,
       products: {

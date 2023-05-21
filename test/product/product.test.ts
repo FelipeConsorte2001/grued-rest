@@ -16,7 +16,7 @@ describe('grud product', () => {
   test('must create a product', async () => {
     const response = await request.default(api)
       .post('/api/product')
-      .send({ name: 'monitor', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: 'monitor', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     expect(response.status).toBe(200)
     expect(response.body.name).toBe('monitor')
     expect(response.body.idCategoria).toBe(category.body.id)
@@ -24,7 +24,7 @@ describe('grud product', () => {
   test('get all products', async () => {
     await request.default(api)
       .post('/api/product')
-      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     const response = await request.default(api)
       .get('/api/product/')
     expect(response.status).toBe(200)
@@ -35,7 +35,7 @@ describe('grud product', () => {
   test('must pick up a product by name', async () => {
     const product = await request.default(api)
       .post('/api/product')
-      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     const response = await request.default(api)
       .get(`/api/product/${product.body.name}`)
     expect(response.status).toBe(200)
@@ -45,7 +45,7 @@ describe('grud product', () => {
   test('must update a product', async () => {
     const product = await request.default(api)
       .post('/api/product')
-      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     const response = await request.default(api)
       .put(`/api/product/${product.body.id}`)
       .send({ name: 'TV', description: 'descripton update', amount: 105.00, idCategoria: category.body.id })
@@ -56,7 +56,7 @@ describe('grud product', () => {
   test('must delete a product', async () => {
     const product = await request.default(api)
       .post('/api/product')
-      .send({ name: 'product del', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: 'product del', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     const response = await request.default(api)
       .delete(`/api/product/${product.body.id}`)
     expect(response.status).toBe(200)
@@ -65,7 +65,7 @@ describe('grud product', () => {
   test('must delete a product', async () => {
     const product = await request.default(api)
       .post('/api/product')
-      .send({ name: 'product del', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+      .send({ name: 'product del', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 })
     const response = await request.default(api)
       .delete(`/api/product/${product.body.id}`)
     expect(response.status).toBe(200)
@@ -83,7 +83,7 @@ describe('validating product parameters', () => {
     category = await request.default(api)
       .post('/api/category')
       .send({ name: 'Computing' })
-    valideProduct = { name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id }
+    valideProduct = { name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 }
   })
 
   const testTemplate = async (newData: any, errorMessage: string): Promise<void> => {
@@ -110,7 +110,7 @@ describe('validating parameters to update the product', () => {
     category = await request.default(api)
       .post('/api/category')
       .send({ name: 'Computing' })
-    valideProduct = { name: 'TV invalid', description: 'some description', amount: 100.00, idCategoria: category.body.id }
+    valideProduct = { name: 'TV invalid', description: 'some description', amount: 100.00, idCategoria: category.body.id, quantity: 10 }
     product = await request.default(api)
       .post('/api/product')
       .send(valideProduct)
