@@ -32,7 +32,17 @@ describe('grud product', () => {
     expect(response.body.name).toBe('TV');
     expect(response.body.description).toBe('some description');
   })
-
+  test('must update a product', async () => {
+    const product = await request.default(api)
+      .post('/api/product')
+      .send({ name: 'TV', description: 'some description', amount: 100.00, idCategoria: category.body.id })
+    const response = await request.default(api)
+      .put(`/api/product/${product.body.id}`)
+      .send({ name: 'TV', description: 'descripton update', amount: 105.00, idCategoria: category.body.id })
+    expect(response.status).toBe(200)
+    expect(response.body.name).toBe('TV');
+    expect(response.body.description).toBe('descripton update');
+  })
   afterAll(async () => {
     await prisma().finally()
   })

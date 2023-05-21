@@ -10,6 +10,7 @@ const servicesProduct = {
       })
       return result
     } catch (error: any) {
+      console.log(error)
       return error
     }
   },
@@ -23,7 +24,20 @@ const servicesProduct = {
       })
       return result
     } catch (error: any) {
-      console.log(error)
+      return error
+    }
+  },
+  updateProduct: async (identifier: Number, product: IProduct): Promise<IProduct> => {
+    try {
+      const db = await prisma()
+      const result = await db.products.update({
+        where: {
+          id: identifier
+        },
+        data: product
+      })
+      return result
+    } catch (error: any) {
       return error
     }
   }
