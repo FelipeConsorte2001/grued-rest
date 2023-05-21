@@ -1,7 +1,7 @@
 import { type Request, type Response } from 'express'
 import servicesProduct from '../services/servicesProduct'
-import { IProduct } from '../types/IProduct.interface'
-import { IErroParameters } from '../types/IErroParameters.interface'
+import { type IProduct } from '../types/IProduct.interface'
+import { type IErroParameters } from '../types/IErroParameters.interface'
 
 const productController = {
   createProduct: async (req: Request, res: Response): Promise<Response> => {

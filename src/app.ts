@@ -10,11 +10,10 @@ const api = express()
 
 api.use(express.json())
 api.use(cors())
-api.use("/api/category", routerCategory)
-api.use("/api/product", routerProduct)
-
+api.use('/api/category', routerCategory)
+api.use('/api/product', routerProduct)
 
 api.get('/', (req, res) => {
-  res.status(200).send();
-});
+  res.status(200).send()
+})
 export { api }

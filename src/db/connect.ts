@@ -1,8 +1,7 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export default async function connect(): Promise<any> {
-  return await prisma
-
+export default async function connect (): Promise<any> {
+  return prisma
 }

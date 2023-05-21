@@ -1,6 +1,6 @@
 import prisma from '../db/connect'
-import { IDelSucess } from '../types/IDelSucess.interface'
-import { IProduct } from '../types/IProduct.interface'
+import { type IDelSucess } from '../types/IDelSucess.interface'
+import { type IProduct } from '../types/IProduct.interface'
 
 const servicesProduct = {
   createProduct: async (product: IProduct): Promise<IProduct> => {
@@ -15,7 +15,7 @@ const servicesProduct = {
       return error
     }
   },
-  findProduct: async (product: String): Promise<IProduct> => {
+  findProduct: async (product: string): Promise<IProduct> => {
     try {
       const db = await prisma()
       const result = await db.products.findFirst({
@@ -28,7 +28,7 @@ const servicesProduct = {
       return error
     }
   },
-  updateProduct: async (identifier: Number, product: IProduct): Promise<IProduct> => {
+  updateProduct: async (identifier: number, product: IProduct): Promise<IProduct> => {
     try {
       const db = await prisma()
       const result = await db.products.update({
@@ -42,10 +42,10 @@ const servicesProduct = {
       return error
     }
   },
-  deleteProduct: async (identifier: Number): Promise<IDelSucess> => {
+  deleteProduct: async (identifier: number): Promise<IDelSucess> => {
     try {
       const db = await prisma()
-      const result = await db.products.delete({
+      await db.products.delete({
         where: {
           id: identifier
         }

@@ -1,6 +1,6 @@
 import prisma from '../db/connect'
-import { ICategory } from '../types/ICategory.interface'
-import { IDelSucess } from '../types/IDelSucess.interface'
+import { type ICategory } from '../types/ICategory.interface'
+import { type IDelSucess } from '../types/IDelSucess.interface'
 const servicesCategory = {
   createCategory: async (category: ICategory): Promise<ICategory> => {
     try {
@@ -13,7 +13,7 @@ const servicesCategory = {
       return error
     }
   },
-  findCategory: async (category: String): Promise<ICategory> => {
+  findCategory: async (category: string): Promise<ICategory> => {
     try {
       const db = await prisma()
       const result = await db.category.findFirst({
@@ -26,10 +26,10 @@ const servicesCategory = {
       return error
     }
   },
-  deleteCategory: async (category: Number): Promise<IDelSucess> => {
+  deleteCategory: async (category: number): Promise<IDelSucess> => {
     try {
       const db = await prisma()
-      const result = await db.category.delete({
+      await db.category.delete({
         where: {
           id: category
         }
@@ -41,7 +41,7 @@ const servicesCategory = {
       return error
     }
   },
-  updateCategory: async (identifier: Number, category: ICategory): Promise<ICategory> => {
+  updateCategory: async (identifier: number, category: ICategory): Promise<ICategory> => {
     try {
       const db = await prisma()
       const result = await db.category.update({
