@@ -21,6 +21,14 @@ const categoryController = {
       return res.status(500).json({ response: error })
     }
   },
+  findCategorys: async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const result = await servicesCategory.findCategorys()
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(500).json({ response: error })
+    }
+  },
   deleteCategory: async (req: Request, res: Response): Promise<Response> => {
     try {
       if (!req.params.id) { return res.status(404) }
