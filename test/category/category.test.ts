@@ -17,12 +17,23 @@ describe('grud category', () => {
   })
 
   test('should return a category', async () => {
+    const category = await request.default(api)
+      .post('/api/category')
+      .send({ name: 'Computing' })
     const response = await request.default(api)
-      .get('/api/category/Computing')
+      .get(`/api/category/${category.body.name}`)
     expect(response.status).toBe(200)
     expect(response.body.name).toBe('Computing')
   })
-
+  test('get all category', async () => {
+    await request.default(api)
+      .post('/api/category')
+      .send({ name: 'Computing', fee: '5' })
+    const response = await request.default(api)
+      .get('/api/category/')
+    expect(response.status).toBe(200)
+    expect(response.body.length).toBeGreaterThan(0)
+  })
   test('validates category parameters', async () => {
     const response = await request.default(api)
       .post('/api/category')
@@ -48,11 +59,6 @@ describe('grud category', () => {
       .send({ name: 'Automotive' })
     expect(response.status).toBe(200)
     expect(response.body.name).toBe('Automotive')
-  })
-  test('should return a valid category', async () => {
-    const response = await request.default(api)
-      .get('/api/category/')
-    expect(response.status).toBe(404)
   })
   test('category update validation', async () => {
     const category = await request.default(api)

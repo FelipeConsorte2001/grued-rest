@@ -26,6 +26,20 @@ const servicesCategory = {
       return error
     }
   },
+  findCategorys: async (): Promise<ICategory> => {
+    try {
+      const db = await prisma()
+      const result = await db.category.findMany({
+        select: {
+          name: true,
+          fee: true
+        }
+      })
+      return result
+    } catch (error: any) {
+      return error
+    }
+  },
   deleteCategory: async (category: number): Promise<IDelSucess> => {
     try {
       const db = await prisma()
