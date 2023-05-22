@@ -11,7 +11,6 @@ const servicesProduct = {
       })
       return result
     } catch (error: any) {
-      console.log(error)
       return error
     }
   },
@@ -21,6 +20,26 @@ const servicesProduct = {
       const result = await db.products.findFirst({
         where: {
           name: product
+        }
+      })
+      return result
+    } catch (error: any) {
+      return error
+    }
+  },
+  findProducts: async (): Promise<IProduct> => {
+    try {
+      const db = await prisma()
+      const result = await db.products.findMany({
+        select: {
+          name: true,
+          description: true,
+          amount: true,
+          category_products_idCategoriaTocategory: {
+            select: {
+              name: true
+            }
+          }
         }
       })
       return result
@@ -54,7 +73,6 @@ const servicesProduct = {
         success: 'product deleted'
       }
     } catch (error: any) {
-      console.log(error)
       return error
     }
   }

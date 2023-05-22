@@ -3,4 +3,5 @@ export interface IProduct {
   description: string
   amount: number
   idCategoria: number
+  quantity: number
 }

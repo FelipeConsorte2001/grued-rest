@@ -23,6 +23,14 @@ const productController = {
       return res.status(500).json({ response: error })
     }
   },
+  findProducts: async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const result = await servicesProduct.findProducts()
+      return res.status(200).json(result)
+    } catch (error) {
+      return res.status(500).json({ response: error })
+    }
+  },
   updateProduct: async (req: Request, res: Response): Promise<Response> => {
     try {
       const validProdut = productController.validProduct(req.body)
