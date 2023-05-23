@@ -38,10 +38,16 @@
 
 6. Run the command: `docker composer up` up to upload a postgres container
 
+## Now we need to generate the database migrates
+
+7. Run the command: `npx npx prisma migrate dev` to generate the migrations in the database
+
+8. Then run the command: `npx prisma generate`
+
 ## To run the tests 
 
-7. Open a new terminal tab and run the command: `yarn secure-mode` this command will run jest that will perform all unit tests 
+9. Open a new terminal tab and run the command: `yarn secure-mode` this command will run jest that will perform all unit tests 
 
 ## To run the API 
 
-8. Just run the command: `yarn dev` this command will run nodemon and allow you to make the request following the <a href="https://felipe.stoplight.io/docs/grud-gen/rxpa9m6mqpji8-product-control-system">docomentation</a> 
+10. Just run the command: `yarn dev` this command will run nodemon and allow you to make the request following the <a href="https://felipe.stoplight.io/docs/grud-gen/rxpa9m6mqpji8-product-control-system">docomentation</a> 
